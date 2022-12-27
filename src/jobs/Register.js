@@ -25,6 +25,8 @@ const Register = () => {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
+    const [address, setAddress] = useState('');
+
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
@@ -56,7 +58,11 @@ const Register = () => {
         }
         try {
             const response = await axios.post(REGISTER_URL,
-                { "email":user, "password":pwd }
+                { 
+                "email": user, 
+                "password": pwd,
+                "address": address
+            }
             ).then(response => {
                     console.log(response.data);
             });
@@ -149,8 +155,28 @@ const Register = () => {
                             
                         </p>
 
+                        <label htmlFor="address">
+                            Address:
+                            
+                        </label>
+                        <input
+                            type="text"
+                            id="address"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setAddress(e.target.value)}
+                            value={address}
+                            required
+                            aria-describedby="uidnote"
+                            onFocus={() => setUserFocus(true)}
+                            onBlur={() => setUserFocus(false)}
+                        />
+    
+
                         <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
+
+                    
                     <p>
                         Already registered?<br />
                         <span className="line">
