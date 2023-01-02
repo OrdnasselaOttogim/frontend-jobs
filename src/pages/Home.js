@@ -25,12 +25,16 @@ const loadJobs = async() => {
 
 
 const deleteJob = async (id) => {
+  if(localStorage.getItem("role") === "[ADMIN]"){
   await axios.delete(BASE_PATH + `/api/v1/job/${id}`, {
     headers : {
       "Authorization" : `Bearer ${localStorage.getItem("jwt_token")}`
     } 
   });
   loadJobs();
+}else{
+  alert("Only administrators can edit jobs!")
+}
 };
 
   return (

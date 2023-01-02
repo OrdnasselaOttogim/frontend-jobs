@@ -40,11 +40,13 @@ const Login = () => {
             
             console.log(JSON.stringify(response));
             
-            const accessToken = response.data;
+            const accessToken = response.data.token;
+            const role = response.data.role;
             setToken(accessToken);
             localStorage.setItem("jwt_token", accessToken);
+            localStorage.setItem("role", role);
 
-            console.log("access token: " + accessToken);
+            console.log("access token: " + accessToken + "\nRole: " + role);
             
             setUser(user);
             setPwd(pwd);
