@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link, useParams } from 'react-router-dom';
+import { Link, /*useParams*/ } from 'react-router-dom';
 import BASE_PATH from '../BASE_PATH';
 
 export default function Home() {
 
 const [jobs,setJobs]=useState([]);
 
-const {id} = useParams();
+//const {id} = useParams();
 
 useEffect(()=>{
     loadJobs();

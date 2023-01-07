@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { /*faCheck, faTimes,*/ faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import BASE_PATH from "../BASE_PATH";
@@ -57,7 +57,7 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,
+            await axios.post(REGISTER_URL,
                 { 
                 "email": user, 
                 "password": pwd,

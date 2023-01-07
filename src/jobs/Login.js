@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useRef, useState, useEffect, /*useContext*/ } from 'react';
 import axios from 'axios';
 import React from 'react';
 import BASE_PATH from '../BASE_PATH';
@@ -16,7 +16,7 @@ const Login = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const [token, setToken] = useState('');
+    const [/*token*/, setToken] = useState('');
 
     useEffect(() => {
         userRef.current.focus();
