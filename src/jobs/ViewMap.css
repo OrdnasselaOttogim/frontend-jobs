@@ -1,0 +1,15 @@
+.section {
+    margin : 1rem;
+}
+
+.sectionTitle {
+    font-weight: 600;
+    font-size: large;
+}
+
+#inputAddress {
+    width: 100%;
+}
+
+
+
