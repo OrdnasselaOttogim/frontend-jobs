@@ -11,5 +11,9 @@
     width: 100%;
 }
 
+#badCity {
+    font-weight: 600;
+    color: red;
+}
 
 

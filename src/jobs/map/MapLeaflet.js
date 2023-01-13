@@ -17,10 +17,14 @@ export default function MapLeaflet(props){
         homeMarker.remove();
       }
       map = L.map('map').setView(position, 13);
-      setPolyline(L.polyline(props.positions).addTo(map));
-      let tempHomeMarker = L.marker(props.positions[0], {icon:DefaultIcon}).addTo(map);
-      tempHomeMarker.bindPopup(props.homeAddress)
-      setHomeMarker(tempHomeMarker);
+      console.log("props.postitions");
+      console.log(props.positions);
+      if (props.positions.length){
+        setPolyline(L.polyline(props.positions).addTo(map));
+        let tempHomeMarker = L.marker(props.positions[0], {icon:DefaultIcon}).addTo(map);
+        tempHomeMarker.bindPopup(props.homeAddress)
+        setHomeMarker(tempHomeMarker);
+      }
     }
   }, [props]);
 
@@ -40,8 +44,6 @@ export default function MapLeaflet(props){
           maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
-      
-
         let jobPosition = L.marker(props.positions[0], {icon:DefaultIcon}).addTo(map);
         setPolyline(L.polyline(props.positions).addTo(map));
     },[])

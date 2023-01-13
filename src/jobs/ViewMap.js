@@ -17,12 +17,13 @@ export default function ViewMap(props){
         job = location.state.job;
         jobPosition = [job.position.lat, job.position.lng];
     }
+    let centerBis = jobPosition;
     const [itineraries, setItineraries] = useState();
     const [home, setHome] = useState();
     const [result, setResult] = useState();
     const [center, setCenter] = useState();
     const [mode, setMode] = useState("walk");
-    
+    const [isHomeValid, setIsHomeValid] = useState(true);    
 
     const loadJob = async () => {
         const result = await axios.get(BASE_PATH + `/api/v1/job/${id}/itinerary?start=${job.address}&end=${home}`, {
@@ -30,18 +31,20 @@ export default function ViewMap(props){
               "Authorization" : `Bearer ${localStorage.getItem("jwt_token")}`
             } 
           });
-          if (result.data.transit.length){
+          if (result.data.transit.position.length){
             setCenter([(result.data.transit.position[0].lat+result.data.transit.position[result.data.transit.position.length-1].lat)/2, (result.data.transit.position[0].lng+result.data.transit.position[result.data.transit.position.length-1].lng)/2])
-          }
-          else {
-            setCenter(jobPosition)
-          }
+            setIsHomeValid(true);
+        }
+        else {
+            setCenter(jobPosition);
+            setIsHomeValid(false);
+        }
         setResult(result.data);
     };
 
     useEffect(() => {
         if (result)
-            setItineraries(result.walk)
+            setItineraries(result.walk);
     }, [result])
 
     useEffect(()=>{
@@ -73,23 +76,11 @@ export default function ViewMap(props){
         loadJob()
     }
 
-    // const [detailsMap, setDetailsMap] = useState({
-    //     time: 0,
-    //     distance: 0,
-    //     start: [],
-    //     end: [],
-    //     positions: []
-    // });
-
-    // useEffect(() => {
-    //     loadJob()
-    // }, []);
-
-
-    // const loadJob = async () => {
-    //     const result = await axios.get(`http://localhost:8082/api/v1/job/${id}`);
-    //     setDetailsMap(result.data);
-    // };
+    function onChangeHandler(event){
+        setHome(event.target.value);
+        setIsHomeValid(true);
+    }
+    
 
     return (
     <div className='container'>
@@ -109,7 +100,8 @@ export default function ViewMap(props){
                 Your address :
                 </div>
                 <form>
-                    <input id="inputAddress" type="text" value={home} onChange={(e) => setHome(e.target.value)} onBlur={onBlurHandler}/>
+                    <input id="inputAddress" type="text" value={home} onChange={onChangeHandler} onBlur={onBlurHandler}/>
+                    {isHomeValid ? null : <div id="badCity">Please enter a closer address</div>}
                 </form>
             </div>
             <div class="section">
@@ -144,14 +136,9 @@ export default function ViewMap(props){
                     </div>
                     {itineraries ? Math.round(itineraries.dist/100)/10 + "km" : "Please enter your address"}
                 </div>
-                {/* <div className='card'>
-                    <div> Time : {itineraries ? Math.round(itineraries.time/60)+"min": "Please enter your address"}</div>
-                    <div> Distance : {itineraries ? Math.round(itineraries.dist/100)/10 + "km" : "Please enter your address"}</div>
-                </div> */}
                 </div>
             </div>
             <div className='col-9'>
-                {/* <Map props = {{positions:itineraries.position}}/> */}
                 {itineraries ? <MapLeaflet positions = {itineraries.position} center = {center} homeAddress = {home}/> : <MapLeaflet positions = {[jobPosition, jobPosition]} center = {jobPosition} homeAddress={""}/> }
             </div>     
     </div>
