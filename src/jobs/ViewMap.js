@@ -80,6 +80,12 @@ export default function ViewMap(props){
         setHome(event.target.value);
         setIsHomeValid(true);
     }
+
+    function onKeyDownHandler(event){
+        if (event.key == "Enter"){
+            onBlurHandler();
+        }
+    }
     
 
     return (
@@ -99,10 +105,8 @@ export default function ViewMap(props){
                 <div class="sectionTitle">
                 Your address :
                 </div>
-                <form>
-                    <input id="inputAddress" type="text" value={home} onChange={onChangeHandler} onBlur={onBlurHandler}/>
+                    <input id="inputAddress" type="text" value={home} onChange={onChangeHandler} onBlur={onBlurHandler} onKeyDown={onKeyDownHandler}/>
                     {isHomeValid ? null : <div id="badCity">Please enter a closer address</div>}
-                </form>
             </div>
             <div class="section">
                 <div class="sectionTitle">
