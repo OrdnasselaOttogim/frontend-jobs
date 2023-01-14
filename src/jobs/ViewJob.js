@@ -25,6 +25,8 @@ export default function ViewJob(){
               "Authorization" : `Bearer ${localStorage.getItem("jwt_token")}`
             } 
           });
+        // HERE WE INITIALIZE THE TRANSLATION OF THE TEXT DEPENDING ON THE GLOBAL VARIABLE
+        // restult.data.title = ...
         setJob(result.data);
     };
 
