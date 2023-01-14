@@ -15,7 +15,6 @@ export default function Navbar() {
                     <Link className='btn btn-outline-light' to="/login">Login</Link>
                     <Link className='btn btn-outline-light' to="/register">Register</Link>
                     <a className='btn btn-outline-light' href="http://localhost:8080">RegisterGoogle</a>
-                    <Link className='btn btn-outline-light' to="/register">Register</Link>
                     <Link className='btn btn-outline-light' to="/addjob">AddJob</Link>
                 </div>
             </nav>
