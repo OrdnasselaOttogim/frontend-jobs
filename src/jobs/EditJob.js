@@ -30,11 +30,15 @@ export default function EditJob() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        if(localStorage.getItem("role") === "[ADMIN]"){
         await axios.put(BASE_PATH + `/api/v1/job/${id}`, job, {
             headers : {
               "Authorization" : `Bearer ${localStorage.getItem("jwt_token")}`
             } 
           });
+        }else{
+            alert("Only administrators can edit jobs!")
+        }
         navigate("/");
     };
 
