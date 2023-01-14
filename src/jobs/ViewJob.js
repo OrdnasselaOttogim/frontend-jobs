@@ -36,6 +36,8 @@ export default function ViewJob(){
         <div className='row'>
             <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
                 <h2 className='text-center m-4'>Job Details </h2>
+               
+                <Link className="btn btn-primary my-2" to={`/viewJob/${id}/Map`} state={{job: job}}>Map</Link>
 
                 <div className="card">
                     <div className="card-header">
