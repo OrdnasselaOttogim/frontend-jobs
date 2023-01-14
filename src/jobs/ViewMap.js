@@ -42,8 +42,22 @@ export default function ViewMap(){
     };
 
     useEffect(() => {
-        if (result)
-            setItineraries(result.walk);
+        if (result){
+            switch (mode){
+                case "drive":
+                    setItineraries(result.drive);
+                    break;
+                case "walk":
+                    setItineraries(result.walk);
+                    break;
+                case "transit":
+                    setItineraries(result.transit);
+                    break;
+                default: 
+                    setItineraries(result.walk);
+                    break; 
+            }
+        }
     }, [result])
 
     useEffect(()=>{
@@ -142,7 +156,7 @@ export default function ViewMap(){
                 </div>
             </div>
             <div className='col-9'>
-                {itineraries ? <MapLeaflet positions = {itineraries.position} center = {center} homeAddress = {home}/> : <MapLeaflet positions = {[jobPosition, jobPosition]} center = {jobPosition} homeAddress={""}/> }
+                {itineraries ? <MapLeaflet positions = {itineraries.position} center = {jobPosition} homeAddress = {home}/> : <MapLeaflet positions = {[jobPosition, jobPosition]} center = {jobPosition} homeAddress={""}/> }
             </div>     
     </div>
     <div>
