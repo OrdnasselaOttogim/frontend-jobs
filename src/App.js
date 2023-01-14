@@ -9,7 +9,7 @@ import ViewJob from './jobs/ViewJob';
 import Register from './jobs/Register';
 import Login from './jobs/Login';
 import React from 'react';
-
+import ViewMap from './jobs/ViewMap';
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
           <Route exact path='/addjob' element={<AddJob/>} />
           <Route exact path='/editjob/:id' element={<EditJob />} />
           <Route exact path='/viewJob/:id' element={<ViewJob />} />
+          <Route exact path='/viewJob/:id/map' element={<ViewMap />} />
         </Routes>
 
     </Router>  

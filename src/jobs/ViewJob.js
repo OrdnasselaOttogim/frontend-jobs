@@ -93,6 +93,8 @@ export default function ViewJob(){
                     <option>de</option>
                 </select>
                 <h2 className='text-center m-4'>Job Details </h2>
+               
+                <Link className="btn btn-primary my-2" to={`/viewJob/${id}/Map`} state={{job: job}}>Map</Link>
 
                 <div className="card">
                     <div className="card-header">
