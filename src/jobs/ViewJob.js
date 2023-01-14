@@ -12,6 +12,9 @@ export default function ViewJob(){
         address: ""
     });
 
+    //state and function to store old language key (default state is set as English)
+    const [oldLanguageKey, setOldLanguageKey] = useState("en");
+
     const {id} = useParams();
 
     useEffect(() => {
@@ -25,16 +28,70 @@ export default function ViewJob(){
               "Authorization" : `Bearer ${localStorage.getItem("jwt_token")}`
             } 
           });
-        // HERE WE INITIALIZE THE TRANSLATION OF THE TEXT DEPENDING ON THE GLOBAL VARIABLE
-        // restult.data.title = ...
         setJob(result.data);
     };
 
+
+    //function that targets the select tag value
+    const translateText  = async (selectedLanguage) => {
+
+        console.log("Old Language: " + oldLanguageKey);
+        console.log("New Language: " + selectedLanguage.target.value);
+
+        // Data is the body of the POST Request for LibreTranslate
+        let data = {
+            q: job.title,
+            source: oldLanguageKey,
+            target: selectedLanguage.target.value,
+        };
+
+        let newTitle = String("");
+        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+            newTitle = response.data.translatedText;
+        });
+        console.log(newTitle);
+
+        data.q = job.description
+        let newDescription = String("");
+        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+            newDescription = response.data.translatedText;
+        });
+        console.log(newDescription);
+
+        data.q = job.category
+        let newCategory = String("");
+        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+            newCategory = response.data.translatedText;
+        });
+        console.log(newCategory);
+
+        data.q = job.address
+        let newAddress;
+        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+            newAddress = response.data.translatedText;
+        });
+        console.log(newAddress);
+
+        setJob({
+            title: newTitle,
+            description: newDescription,
+            category: newCategory,
+            address: newAddress
+        });
+
+        // After the website is translated, we set the old key to be the new language
+        setOldLanguageKey(selectedLanguage.target.value);
+    };
 
     return(
         <div className='container'>
         <div className='row'>
             <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
+                <select className="select" onChange={translateText}>
+                    <option>en</option>
+                    <option>it</option>
+                    <option>de</option>
+                </select>
                 <h2 className='text-center m-4'>Job Details </h2>
 
                 <div className="card">
