@@ -16,7 +16,7 @@ export default function MapLeaflet(props){
       if (homeMarker !== undefined){
         homeMarker.remove();
       }
-      map = L.map('map').setView(center, 13);
+      map = L.map('map', {zoomControl:false}).setView(center, 13);
       if (props.positions.length){
         setPolyline(L.polyline(props.positions).addTo(map));
         let tempHomeMarker = L.marker(props.positions[0], {icon:DefaultIcon}).addTo(map);
@@ -37,7 +37,7 @@ export default function MapLeaflet(props){
     if(mapContainer != null){
       mapContainer._leaflet_id = null;
     }  
-      map = L.map('map').setView(center, 13);
+      map = L.map('map', {zoomControl:false}).setView(center, 13);
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
