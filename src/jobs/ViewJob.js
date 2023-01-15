@@ -1,7 +1,9 @@
-import axios from "axios";
+import axios, {options} from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import BASE_PATH from "../BASE_PATH";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ViewJob(){
 
@@ -31,13 +33,22 @@ export default function ViewJob(){
         setJob(result.data);
     };
 
+    const toastId = React.useRef(null);
+    const notify = () => toastId.current = toast("Translating...", {
+        autoClose: false
+    });
+
+    const success = () => toast.success("Translated!", {
+        autoClose: 5000,
+        hideProgressBar: true
+    });
 
     //function that targets the select tag value
     const translateText  = async (selectedLanguage) => {
 
-        console.log("Old Language: " + oldLanguageKey);
-        console.log("New Language: " + selectedLanguage.target.value);
-
+        //console.log("Old Language: " + oldLanguageKey);
+        //console.log("New Language: " + selectedLanguage.target.value);
+        notify();
         // Data is the body of the POST Request for LibreTranslate
         let data = {
             q: job.title,
@@ -46,31 +57,31 @@ export default function ViewJob(){
         };
 
         let newTitle = String("");
+        let newDescription = String("");
+        let newCategory = String("");
+        let newAddress = String("");
+
         await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
             newTitle = response.data.translatedText;
         });
-        console.log(newTitle);
 
         data.q = job.description
-        let newDescription = String("");
         await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
             newDescription = response.data.translatedText;
         });
-        console.log(newDescription);
 
         data.q = job.category
-        let newCategory = String("");
         await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
             newCategory = response.data.translatedText;
         });
-        console.log(newCategory);
 
         data.q = job.address
-        let newAddress;
         await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
             newAddress = response.data.translatedText;
         });
-        console.log(newAddress);
+
+        toast.dismiss(toastId.current);
+        success();
 
         setJob({
             title: newTitle,
@@ -92,6 +103,7 @@ export default function ViewJob(){
                     <option>it</option>
                     <option>de</option>
                 </select>
+                <ToastContainer />
                 <h2 className='text-center m-4'>Job Details </h2>
                
                 <Link className="btn btn-primary my-2" to={`/viewJob/${id}/Map`} state={{job: job}}>Map</Link>
