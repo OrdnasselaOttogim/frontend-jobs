@@ -20,7 +20,6 @@ export default function ViewMap(){
     const [itineraries, setItineraries] = useState();
     const [home, setHome] = useState();
     const [result, setResult] = useState();
-    const [center, setCenter] = useState();
     const [mode, setMode] = useState("walk");
     const [isHomeValid, setIsHomeValid] = useState(true);    
 
@@ -31,11 +30,9 @@ export default function ViewMap(){
             } 
           });
           if (result.data.transit.position.length){
-            setCenter([(result.data.transit.position[0].lat+result.data.transit.position[result.data.transit.position.length-1].lat)/2, (result.data.transit.position[0].lng+result.data.transit.position[result.data.transit.position.length-1].lng)/2])
             setIsHomeValid(true);
         }
         else {
-            setCenter(jobPosition);
             setIsHomeValid(false);
         }
         setResult(result.data);
