@@ -42,7 +42,7 @@ export default function MapLeaflet(props){
           maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
-        let jobPosition = L.marker(props.positions[0], {icon:DefaultIcon}).addTo(map);
+        L.marker(props.positions[0], {icon:DefaultIcon}).addTo(map);
         setPolyline(L.polyline(props.positions).addTo(map));
     },[])
 
