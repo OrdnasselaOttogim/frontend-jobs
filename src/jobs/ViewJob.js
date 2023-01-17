@@ -91,7 +91,8 @@ export default function ViewJob(){
             title: newTitle,
             description: newDescription,
             category: newCategory,
-            address: newAddress
+            address: newAddress,
+            position: job.position
         });
 
         // After the website is translated, we set the old key to be the new language
