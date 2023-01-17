@@ -1,4 +1,4 @@
-import axios, {options} from "axios";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import BASE_PATH from "../BASE_PATH";
@@ -61,22 +61,26 @@ export default function ViewJob(){
         let newCategory = String("");
         let newAddress = String("");
 
-        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+        let axiosConfig = {
+            headers: { "Content-Type": "application/json" }
+        };
+
+        await axios.post(`http://127.0.0.1:5000/translate`, data, axiosConfig).then((response) => {
             newTitle = response.data.translatedText;
         });
 
         data.q = job.description
-        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+        await axios.post(`http://127.0.0.1:5000/translate`, data, axiosConfig).then((response) => {
             newDescription = response.data.translatedText;
         });
 
         data.q = job.category
-        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+        await axios.post(`http://127.0.0.1:5000/translate`, data, axiosConfig).then((response) => {
             newCategory = response.data.translatedText;
         });
 
         data.q = job.address
-        await axios.post(`http://127.0.0.1:5000/translate`, data).then((response) => {
+        await axios.post(`http://127.0.0.1:5000/translate`, data, axiosConfig).then((response) => {
             newAddress = response.data.translatedText;
         });
 
